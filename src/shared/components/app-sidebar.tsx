@@ -177,6 +177,9 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { profile } = useAuth();
+  if (!profile) {
+    throw new Error("No user available");
+  }
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

@@ -33,7 +33,7 @@ export default function Header() {
         </Breadcrumb>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-muted-foreground">{profile.role}</span>
+        <span className="text-muted-foreground">{profile?.role}</span>
         <BellIcon className="size-5" />
         <LogoutButton>
           <PowerIcon className="size-5" />
