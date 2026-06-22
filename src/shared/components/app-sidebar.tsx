@@ -18,9 +18,6 @@ import {
 } from "@/shared/components/ui/sidebar";
 import {
   LayoutDashboardIcon,
-  ListIcon,
-  ChartBarIcon,
-  FolderIcon,
   UsersIcon,
   CameraIcon,
   FileTextIcon,
@@ -31,8 +28,6 @@ import {
   FileChartColumnIcon,
   FileIcon,
   CommandIcon,
-  WarehouseIcon,
-  ShelvingUnit,
   ShelvingUnitIcon,
   ShoppingCartIcon,
   PackageIcon,
@@ -41,7 +36,6 @@ import {
   HousePlugIcon,
   ContactRoundIcon,
 } from "lucide-react";
-import Badge from "./shared/Badge";
 import { useAuth } from "@/modules/auth/shared/useAuth";
 
 const data = {
