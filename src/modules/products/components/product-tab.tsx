@@ -7,7 +7,7 @@ import GeneralTab from "./tabs/general-tab";
 import VariantsTab from "./tabs/variants-tab";
 import ImagesTab from "./tabs/images-tab";
 import AttributesTab from "./tabs/attributes-tab";
-import type { ProductWithRelations } from "../products.repository";
+import type { ProductWithRelations } from "../repository/products.repository";
 
 interface ProductTabsProps {
   product: ProductWithRelations;
@@ -26,7 +26,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
 
   return (
     <Tabs value={activeTab} onValueChange={handleTabChange}>
-      <TabsList>
+      <TabsList className="space-x-2">
         <TabsTrigger value="general">General</TabsTrigger>
         <TabsTrigger value="variants">Variants</TabsTrigger>
         <TabsTrigger value="images">Images</TabsTrigger>

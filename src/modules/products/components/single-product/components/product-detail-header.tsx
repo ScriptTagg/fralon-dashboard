@@ -1,7 +1,7 @@
 // modules/products/components/ProductDetailHeader.tsx
 import Link from "next/link";
 import { Badge } from "@/shared/components/ui/badge";
-import type { ProductWithRelations } from "@/modules/products/products.repository";
+import type { ProductWithRelations } from "@/modules/products/repository/products.repository";
 
 export default function ProductDetailHeader({ product }: { product: ProductWithRelations }) {
   return (

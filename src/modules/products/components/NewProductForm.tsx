@@ -24,7 +24,7 @@ import {
 } from "@/shared/components/ui/select";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import { useCreateProduct } from "../hooks/use-create-product";
+import { useCreateProduct } from "../hooks/products/use-create-product";
 import { useGetCategories } from "@/modules/categories/hooks/use-get-categories";
 import { Switch } from "@/shared/components/ui/switch";
 

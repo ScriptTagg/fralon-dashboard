@@ -1,7 +1,7 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { UpdateProductInput } from "../schemas/udate-product.schema";
-import { productsService } from "../products.service";
+import type { UpdateProductInput } from "../../schemas/udate-product.schema";
+import { productsService } from "../../services/products.service";
 import { toast } from "sonner";
 
 export function useUpdateProduct(productId: string) {

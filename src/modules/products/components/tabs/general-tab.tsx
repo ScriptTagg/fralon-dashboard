@@ -19,8 +19,8 @@ import {
 } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 import { useGetCategories } from "@/modules/categories/hooks/use-get-categories";
-import { useUpdateProduct } from "../../hooks/use-update-product";
-import type { ProductWithRelations } from "../../products.repository";
+import { useUpdateProduct } from "../../hooks/products/use-update-product";
+import type { ProductWithRelations } from "../../repository/products.repository";
 import { updateProductSchema, type UpdateProductInput } from "../../schemas/udate-product.schema";
 import { slugify } from "@/shared/utils/slugify";
 
@@ -46,7 +46,7 @@ export default function GeneralTab({ product }: GeneralTabProps) {
     resolver: zodResolver(updateProductSchema),
     defaultValues: {
       name: product.name,
-      slug: product.slug ?? "",
+      slug: product.slug,
       category_id: product.category_id ?? undefined,
       description: product.description ?? "",
       is_active: product.is_active,

@@ -1,5 +1,5 @@
 import FullScreenLoader from "@/shared/components/layout/blocks/FullScreenLoader";
-import { useGetProducts } from "../hooks/useGetProducts";
+import { useGetProducts } from "../hooks/products/useGetProducts";
 import { columns } from "../components/products-table/columns";
 import { DataTable } from "../components/products-table/data-table";
 import NavButton from "@/shared/components/shared/NavButton";

@@ -1,9 +1,9 @@
 import { supabase } from "@/shared/lib/supabase/client";
 import { ApiCustomError } from "@/shared/errors/api-error";
 import type { QueryData } from "@supabase/supabase-js";
-import type { Product } from "./products.types";
-import type { NewProductInput } from "./schemas/new-product.schema";
-import type { UpdateProductInput } from "./schemas/udate-product.schema";
+import type { Product } from "../types/products.types";
+import type { NewProductInput } from "../schemas/new-product.schema";
+import type { UpdateProductInput } from "../schemas/udate-product.schema";
 
 const productWithRelationsQuery = supabase
   .from("products")

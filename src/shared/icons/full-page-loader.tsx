@@ -1,70 +1,39 @@
 export default function FullPageLoader() {
   return (
-    <svg className="w-20 h-20" viewBox="0 0 57 60" xmlns="http://www.w3.org/2000/svg" stroke="hsl(228, 97%, 42%)">
-      <g fill="none" fillRule="evenodd">
-        <g transform="translate(1 1)" strokeWidth="3">
-          <circle cx="5" cy="50" r="5">
-            <animate
-              attributeName="cy"
-              begin="0s"
-              dur="2.2s"
-              values="50;5;50;50"
-              calcMode="linear"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cx"
-              begin="0s"
-              dur="2.2s"
-              values="5;27;49;5"
-              calcMode="linear"
-              repeatCount="indefinite"
-            />
-          </circle>
-          <circle cx="27" cy="5" r="5">
-            <animate
-              attributeName="cy"
-              begin="0s"
-              dur="2.2s"
-              from="5"
-              to="5"
-              values="5;50;50;5"
-              calcMode="linear"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cx"
-              begin="0s"
-              dur="2.2s"
-              from="27"
-              to="27"
-              values="27;49;5;27"
-              calcMode="linear"
-              repeatCount="indefinite"
-            />
-          </circle>
-          <circle cx="49" cy="50" r="5">
-            <animate
-              attributeName="cy"
-              begin="0s"
-              dur="2.2s"
-              values="50;50;5;50"
-              calcMode="linear"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cx"
-              from="49"
-              to="49"
-              begin="0s"
-              dur="2.2s"
-              values="49;5;27;49"
-              calcMode="linear"
-              repeatCount="indefinite"
-            />
-          </circle>
-        </g>
-      </g>
+    <svg className="w-14 h-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+      <circle fill="#FF156D" stroke="#FF156D" strokeWidth="15" r="15" cx="40" cy="65">
+        <animate
+          attributeName="cy"
+          calcMode="spline"
+          dur="2"
+          values="65;135;65;"
+          keySplines=".5 0 .5 1;.5 0 .5 1"
+          repeatCount="indefinite"
+          begin="-.4"
+        ></animate>
+      </circle>
+      <circle fill="#FF156D" stroke="#FF156D" strokeWidth="15" r="15" cx="100" cy="65">
+        <animate
+          attributeName="cy"
+          calcMode="spline"
+          dur="2"
+          values="65;135;65;"
+          keySplines=".5 0 .5 1;.5 0 .5 1"
+          repeatCount="indefinite"
+          begin="-.2"
+        ></animate>
+      </circle>
+      <circle fill="#FF156D" stroke="#FF156D" strokeWidth="15" r="15" cx="160" cy="65">
+        <animate
+          attributeName="cy"
+          calcMode="spline"
+          dur="2"
+          values="65;135;65;"
+          keySplines=".5 0 .5 1;.5 0 .5 1"
+          repeatCount="indefinite"
+          begin="0"
+        ></animate>
+      </circle>
     </svg>
   );
 }

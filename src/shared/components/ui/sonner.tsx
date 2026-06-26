@@ -94,7 +94,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           // base — applied to every toast
           toast: [
             "group toast flex items-start gap-3 rounded-lg border px-4 py-3 shadow-md",
-            "text-sm font-medium",
+            "text-base font-medium",
             "group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border",
           ].join(" "),
 

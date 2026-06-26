@@ -2,7 +2,7 @@
 "use client";
 
 import { Skeleton } from "@/shared/components/ui/skeleton";
-import { useGetSingleProduct } from "../hooks/useGetSingleProduct";
+import { useGetSingleProduct } from "../hooks/products/useGetSingleProduct";
 import ProductDetailHeader from "../components/single-product/components/product-detail-header";
 import ProductTabs from "../components/product-tab";
 import { useParams } from "next/navigation";

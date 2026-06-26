@@ -1,7 +1,7 @@
 import { slugify } from "@/shared/utils/slugify";
-import { productsRepository } from "./products.repository";
-import type { NewProductInput } from "./schemas/new-product.schema";
-import type { UpdateProductInput } from "./schemas/udate-product.schema";
+import { productsRepository } from "../repository/products.repository";
+import type { NewProductInput } from "../schemas/new-product.schema";
+import type { UpdateProductInput } from "../schemas/udate-product.schema";
 
 export const productsService = {
   getProducts() {

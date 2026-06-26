@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import type { ProductWithRelations } from "../../products.repository";
+import type { ProductWithRelations } from "../../repository/products.repository";
 import { timeDiff } from "@/shared/utils/time-diff";
 import StatusBadge from "../StatusBadge";
 import TableImage from "./TableImage";

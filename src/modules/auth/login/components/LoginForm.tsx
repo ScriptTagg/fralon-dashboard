@@ -38,9 +38,9 @@ export default function LoginForm() {
 
   return (
     <SectionWrapper className="flex flex-col gap-4 items-center">
-      <form onSubmit={handleSubmit(handleLogin)} className="w-full max-w-82 mx-auto mt-4">
+      <form onSubmit={handleSubmit(handleLogin)} className="w-full max-w-82 mx-auto">
         <FieldSet className="gap-6">
-          <FieldLegend className="mx-auto mb-12">
+          <FieldLegend className="mx-auto mb-10">
             <PageHeading>Login</PageHeading>
           </FieldLegend>
           <Activity mode={error ? "visible" : "hidden"}>

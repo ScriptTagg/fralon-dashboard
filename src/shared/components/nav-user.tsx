@@ -78,7 +78,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem variant="destructive" asChild>
               <LogOutIcon />
               Log out
             </DropdownMenuItem>
