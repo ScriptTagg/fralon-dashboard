@@ -5,8 +5,6 @@ import type { ProductImage, ProductImageWithUrl } from "../types/product-image.t
 import { ApiCustomError } from "@/shared/errors/api-error";
 
 const BUCKET = "products";
-const MAX_SIZE_BYTES = 5 * 1024 * 1024;
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 function deriveUrl(storagePath: string): string {
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(storagePath);
@@ -29,61 +27,35 @@ export const productImagesRepository = {
     return data.map(withUrl);
   },
 
-  async uploadImages(productId: string, files: File[], variantId?: string | null): Promise<ProductImageWithUrl[]> {
-    // validate before touching storage
-    for (const file of files) {
-      if (!ALLOWED_TYPES.includes(file.type)) {
-        throw new ApiCustomError(`${file.name} is not a supported type. Use PNG, JPG or WEBP.`, 400);
-      }
-      if (file.size > MAX_SIZE_BYTES) {
-        throw new ApiCustomError(`${file.name} exceeds the 5MB limit.`, 400);
-      }
-    }
-
-    // get current count for sort_order offset + whether any image exists
-    const { count } = await supabase
+  // called after useSupabaseUpload confirms the files are in storage
+  async saveImageRecords(
+    productId: string,
+    storagePaths: string[],
+    variantId?: string | null,
+  ): Promise<ProductImageWithUrl[]> {
+    // get current count for sort_order offset + primary detection
+    const { count, error: countError } = await supabase
       .from("product_images")
       .select("*", { count: "exact", head: true })
       .eq("product_id", productId);
 
+    if (countError) throw new ApiCustomError("Failed to check existing images", 500);
+
     const existingCount = count ?? 0;
     const isVeryFirst = existingCount === 0;
 
-    const uploaded: ProductImageWithUrl[] = [];
+    const records = storagePaths.map((path, i) => ({
+      product_id: productId,
+      variant_id: variantId ?? null,
+      storage_path: path,
+      is_primary: isVeryFirst && i === 0,
+      sort_order: existingCount + i,
+    }));
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const ext = file.name.split(".").pop() ?? "jpg";
-      const path = `${productId}/${crypto.randomUUID()}.${ext}`;
+    const { data, error } = await supabase.from("product_images").insert(records).select();
 
-      const { error: storageError } = await supabase.storage.from(BUCKET).upload(path, file);
-
-      if (storageError) {
-        throw new ApiCustomError(`Failed to upload ${file.name}`, 500);
-      }
-
-      const { data, error: dbError } = await supabase
-        .from("product_images")
-        .insert({
-          product_id: productId,
-          variant_id: variantId ?? null,
-          storage_path: path,
-          is_primary: isVeryFirst && i === 0, // first ever image auto-primary
-          sort_order: existingCount + i,
-        })
-        .select()
-        .single();
-
-      if (dbError) {
-        // best-effort cleanup — remove the orphaned storage file
-        await supabase.storage.from(BUCKET).remove([path]);
-        throw new ApiCustomError("Failed to save image record", 500);
-      }
-
-      uploaded.push(withUrl(data));
-    }
-
-    return uploaded;
+    if (error) throw new ApiCustomError("Failed to save image records", 500);
+    return data.map(withUrl);
   },
 
   async deleteImage(image: ProductImage): Promise<void> {
@@ -97,7 +69,6 @@ export const productImagesRepository = {
   },
 
   async setPrimaryImage(productId: string, imageId: string): Promise<void> {
-    // clear existing primary first
     const { error: clearError } = await supabase
       .from("product_images")
       .update({ is_primary: false })

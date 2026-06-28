@@ -1,7 +1,7 @@
 export default function FullPageLoader() {
   return (
     <svg className="w-14 h-14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-      <circle fill="#FF156D" stroke="#FF156D" strokeWidth="15" r="15" cx="40" cy="65">
+      <circle className="fill-primary stroke-primary" strokeWidth="15" r="15" cx="40" cy="65">
         <animate
           attributeName="cy"
           calcMode="spline"
@@ -12,7 +12,7 @@ export default function FullPageLoader() {
           begin="-.4"
         ></animate>
       </circle>
-      <circle fill="#FF156D" stroke="#FF156D" strokeWidth="15" r="15" cx="100" cy="65">
+      <circle className="fill-primary stroke-primary" strokeWidth="15" r="15" cx="100" cy="65">
         <animate
           attributeName="cy"
           calcMode="spline"
@@ -23,7 +23,7 @@ export default function FullPageLoader() {
           begin="-.2"
         ></animate>
       </circle>
-      <circle fill="#FF156D" stroke="#FF156D" strokeWidth="15" r="15" cx="160" cy="65">
+      <circle className="fill-primary stroke-primary" strokeWidth="15" r="15" cx="160" cy="65">
         <animate
           attributeName="cy"
           calcMode="spline"

@@ -6,8 +6,8 @@ export const productImagesService = {
   getImages(productId: string) {
     return productImagesRepository.getImages(productId);
   },
-  uploadImages(productId: string, files: File[], variantId?: string | null) {
-    return productImagesRepository.uploadImages(productId, files, variantId);
+  saveImageRecords(productId: string, storagePaths: string[], variantId?: string | null) {
+    return productImagesRepository.saveImageRecords(productId, storagePaths, variantId);
   },
   deleteImage(image: ProductImage) {
     return productImagesRepository.deleteImage(image);

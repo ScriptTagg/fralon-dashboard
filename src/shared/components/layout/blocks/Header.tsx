@@ -32,7 +32,7 @@ export default function Header() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center translate-x-1/4">
         <small className="text-muted-foreground">{profile?.role}</small>
         <BellIcon className="size-5" />
         <LogoutButton>

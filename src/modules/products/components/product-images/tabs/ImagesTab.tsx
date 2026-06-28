@@ -1,8 +1,9 @@
 // modules/products/components/tabs/ImagesTab.tsx
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ImageIcon } from "lucide-react";
+import ImageDropzone from "../ImageDropzone";
 import ProductImageCard from "../ProductImageCard";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import {
@@ -27,17 +28,15 @@ import {
 import type { ProductImageWithUrl } from "@/modules/products/types/product-image.types";
 import { useProductImages } from "@/modules/products/hooks/product-images/use-product-images";
 import { useProductVariants } from "@/modules/products/hooks/product-variants/use-product-variants";
-import { useUploadProductImages } from "@/modules/products/hooks/product-images/use-upload-product-images";
+import { useSaveImageRecords } from "@/modules/products/hooks/product-images/use-save-image-records";
 import { useDeleteProductImage } from "@/modules/products/hooks/product-images/use-delete-product-image";
 import { useSetPrimaryImage } from "@/modules/products/hooks/product-images/use-set-primary-image";
 import type { ProductVariant } from "@/modules/products/types/product-variants.types";
-import ImageDropzone from "../ImageDropzone";
 
 interface ImagesTabProps {
   productId: string;
 }
 
-// "none" is a sentinel value meaning product-level (no variant)
 const NO_VARIANT = "none";
 
 export default function ImagesTab({ productId }: ImagesTabProps) {
@@ -47,20 +46,17 @@ export default function ImagesTab({ productId }: ImagesTabProps) {
   const { data: images, isLoading: imagesLoading } = useProductImages(productId);
   const { data: variants, isLoading: variantsLoading } = useProductVariants(productId);
 
-  const { mutate: upload, isPending: isUploading } = useUploadProductImages(productId);
+  const { mutate: saveRecords, isPending: isSaving } = useSaveImageRecords(productId);
   const { mutate: deleteImg, isPending: isDeleting } = useDeleteProductImage(productId);
   const { mutate: setPrimary, isPending: isSettingPrimary } = useSetPrimaryImage(productId);
 
   const isLoading = imagesLoading || variantsLoading;
 
-  // build a lookup map for variant names
   const variantMap = new Map<string, ProductVariant>(variants?.map((v) => [v.id, v]) ?? []);
 
-  // group images: product-level first, then per-variant
   const productImages = images?.filter((img) => img.variant_id === null) ?? [];
   const variantImages = images?.filter((img) => img.variant_id !== null) ?? [];
 
-  // further group variant images by variant_id
   const byVariant = variantImages.reduce<Map<string, ProductImageWithUrl[]>>((acc, img) => {
     const key = img.variant_id!;
     if (!acc.has(key)) acc.set(key, []);
@@ -68,12 +64,16 @@ export default function ImagesTab({ productId }: ImagesTabProps) {
     return acc;
   }, new Map());
 
-  const handleUpload = (files: File[]) => {
-    upload({
-      files,
-      variantId: selectedVariant === NO_VARIANT ? null : selectedVariant,
-    });
-  };
+  // stable reference so ImageDropzone's useEffect doesn't re-fire
+  const handleUploadSuccess = useCallback(
+    (storagePaths: string[]) => {
+      saveRecords({
+        storagePaths,
+        variantId: selectedVariant === NO_VARIANT ? null : selectedVariant,
+      });
+    },
+    [saveRecords, selectedVariant],
+  );
 
   const handleDeleteConfirm = () => {
     if (!deletingImage) return;
@@ -92,16 +92,16 @@ export default function ImagesTab({ productId }: ImagesTabProps) {
         <p className="text-xs text-muted-foreground mt-0.5">
           Upload images for the product overall, or associate them with a specific variant. The primary image is used as
           the storefront thumbnail.
+          {hasImages && ` ${images!.length} image${images!.length !== 1 ? "s" : ""} uploaded.`}
         </p>
       </div>
 
       {/* ── Upload section ── */}
       <div className="space-y-3">
-        {/* variant selector — only show if variants exist */}
         {(variants?.length ?? 0) > 0 && (
           <div className="flex items-center gap-3">
             <p className="text-xs text-muted-foreground shrink-0">Associate with:</p>
-            <Select value={selectedVariant} onValueChange={setSelectedVariant} disabled={isUploading}>
+            <Select value={selectedVariant} onValueChange={setSelectedVariant} disabled={isSaving}>
               <SelectTrigger className="h-8 w-52 text-xs">
                 <SelectValue />
               </SelectTrigger>
@@ -120,7 +120,8 @@ export default function ImagesTab({ productId }: ImagesTabProps) {
           </div>
         )}
 
-        <ImageDropzone onFiles={handleUpload} isPending={isUploading} />
+        {/* ← now just needs productId and onSuccess */}
+        <ImageDropzone productId={productId} onSuccess={handleUploadSuccess} />
       </div>
 
       {/* ── Empty state ── */}
@@ -205,7 +206,6 @@ export default function ImagesTab({ productId }: ImagesTabProps) {
   );
 }
 
-// ── Small layout component — keeps the grouped sections consistent ──
 function ImageGroup({
   title,
   description,
@@ -218,7 +218,7 @@ function ImageGroup({
   return (
     <div className="space-y-3">
       <div>
-        <p className="text-xs font-medium text-foreground">{title}</p>
+        <p className="text-xs font-medium">{title}</p>
         <p className="text-[11px] text-muted-foreground">{description}</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">{children}</div>
@@ -233,7 +233,7 @@ function ImagesTabSkeleton() {
         <Skeleton className="h-4 w-32" />
         <Skeleton className="h-3 w-64" />
       </div>
-      <Skeleton className="h-32 w-full rounded-lg" />
+      <Skeleton className="h-40 w-full rounded-lg" />
       <div className="space-y-3">
         <Skeleton className="h-3 w-24" />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
