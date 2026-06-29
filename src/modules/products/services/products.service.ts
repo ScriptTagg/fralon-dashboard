@@ -17,4 +17,7 @@ export const productsService = {
   updateProduct(productId: string, input: UpdateProductInput) {
     return productsRepository.updateProduct(productId, input);
   },
+  updateMetadata(productId: string, metadata: Record<string, string>) {
+    return productsRepository.updateMetadata(productId, metadata);
+  },
 };

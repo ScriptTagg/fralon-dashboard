@@ -1,6 +1,6 @@
 export default function FullPageLoader() {
   return (
-    <svg className="w-18 h-18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <svg className="w-22 h-22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
       <circle className="fill-primary stroke-primary" strokeWidth="15" r="15" cx="40" cy="65">
         <animate
           attributeName="cy"

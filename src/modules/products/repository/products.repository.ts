@@ -4,6 +4,7 @@ import type { QueryData } from "@supabase/supabase-js";
 import type { Product } from "../types/products.types";
 import type { NewProductInput } from "../schemas/new-product.schema";
 import type { UpdateProductInput } from "../schemas/udate-product.schema";
+import type { Json } from "@/shared/lib/supabase/database.types";
 
 const productWithRelationsQuery = supabase
   .from("products")
@@ -59,5 +60,13 @@ export const productsRepository = {
     }
 
     return data;
+  },
+  async updateMetadata(productId: string, metadata: Record<string, string>): Promise<void> {
+    const { error } = await supabase
+      .from("products")
+      .update({ metadata: metadata as Json })
+      .eq("id", productId);
+
+    if (error) throw new ApiCustomError("Failed to update attributes", 500);
   },
 };

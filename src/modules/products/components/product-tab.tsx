@@ -5,9 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import GeneralTab from "./tabs/general-tab";
 import VariantsTab from "./tabs/variants-tab";
-import AttributesTab from "./tabs/attributes-tab";
 import type { ProductWithRelations } from "../repository/products.repository";
 import ImagesTab from "./product-images/tabs/ImagesTab";
+import AttributesTab from "./tabs/AttributesTab";
 
 interface ProductTabsProps {
   product: ProductWithRelations;

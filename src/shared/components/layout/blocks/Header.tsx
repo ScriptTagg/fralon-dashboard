@@ -33,8 +33,7 @@ export default function Header() {
         </Breadcrumb>
       </div>
       <div className="flex items-center translate-x-1/4">
-        <small className="text-muted-foreground">{profile?.role}</small>
-        <BellIcon className="size-5" />
+        <small className="text-muted-foreground border border-border rounded-full px-3 py-1">{profile?.role}</small>
         <LogoutButton>
           <PowerIcon className="size-5" />
         </LogoutButton>

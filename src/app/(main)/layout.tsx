@@ -21,9 +21,9 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   if (!isInitialized) return <FullScreenLoader />;
   if (!isAuthenticated) return null;
   return (
-    <SidebarProvider>
+    <SidebarProvider className="">
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="min-h-screen">
         <Header />
         <main className="flex flex-1 flex-col p-6">{children}</main>
         <Footer />
