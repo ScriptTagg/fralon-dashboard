@@ -23,6 +23,7 @@ import { useUpdateProduct } from "../../hooks/products/use-update-product";
 import type { ProductWithRelations } from "../../repository/products.repository";
 import { updateProductSchema, type UpdateProductInput } from "../../schemas/udate-product.schema";
 import { slugify } from "@/shared/utils/slugify";
+import FullScreenLoader from "@/shared/components/layout/blocks/FullScreenLoader";
 
 interface GeneralTabProps {
   product: ProductWithRelations;

@@ -27,7 +27,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           <Badge />
         </SectionWrapper>
       </header>
-      <main className="flex flex-col flex-1 gap-x-4 pt-0">{children}</main>
+      <main className="flex flex-col flex-1 pt-8">{children}</main>
       <footer className="">
         <SectionWrapper className="text-center">
           <Copyright />
